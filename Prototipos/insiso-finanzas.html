@@ -1,0 +1,369 @@
+<title>INSISO Finanzas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#F2F6F9; --surface:#FFFFFF; --ink:#17222C; --ink-2:#5A6B78; --line:#DCE6ED;
+  --accent:#0090CF; --accent-2:#2E6BFF; --accent-soft:#E3F4FC;
+  --navy:#0A1628; --navy-2:#101F35; --navy-line:#1D3049; --on-navy:#B9C7D6;
+  --good:#1F9D55; --good-soft:#E2F5EA; --warn:#B8860B; --warn-soft:#FBF3D9;
+  --crit:#C0392B; --crit-soft:#FADDD9; --gold:#C9A227;
+  --shadow:0 1px 2px rgba(10,22,40,.06),0 8px 24px -12px rgba(10,22,40,.12);
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1722; --surface:#131F2C; --ink:#E4ECF3; --ink-2:#8FA1B0; --line:#24354A;
+    --accent:#3FB6E8; --accent-2:#6E93FF; --accent-soft:#12293A;
+    --navy:#0A1628; --navy-2:#0E1C30; --navy-line:#1D3049; --on-navy:#B9C7D6;
+    --good:#4CC98A; --good-soft:#123324; --warn:#D9B24A; --warn-soft:#33290F;
+    --crit:#E9705F; --crit-soft:#3A1712;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1722; --surface:#131F2C; --ink:#E4ECF3; --ink-2:#8FA1B0; --line:#24354A;
+  --accent:#3FB6E8; --accent-2:#6E93FF; --accent-soft:#12293A;
+  --navy:#0A1628; --navy-2:#0E1C30; --navy-line:#1D3049; --on-navy:#B9C7D6;
+  --good:#4CC98A; --good-soft:#123324; --warn:#D9B24A; --warn-soft:#33290F;
+  --crit:#E9705F; --crit-soft:#3A1712;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 "Manrope",system-ui,-apple-system,sans-serif}
+.num{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+/* ---------- sidebar (siempre navy: es la marca) ---------- */
+.side{width:232px;flex:none;background:var(--navy);color:var(--on-navy);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{padding:18px 18px 14px;border-bottom:1px solid var(--navy-line)}
+.brand .logo{font-weight:800;font-size:19px;letter-spacing:.04em;color:#FFF}
+.brand .logo em{font-style:normal;color:#00C2FF}
+.brand small{display:block;color:#5F7690;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.mods{padding:12px 10px 4px}
+.side .lbl{color:#516B85;padding:0 10px;margin:10px 0 6px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.mod{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;font-weight:600;color:#8FA5BC}
+.mod .dot{width:8px;height:8px;border-radius:2px;background:#33475E;flex:none}
+.mod.act{background:linear-gradient(90deg,rgba(0,194,255,.16),rgba(46,107,255,.10));color:#FFF}
+.mod.act .dot{background:linear-gradient(135deg,#00C2FF,#2E6BFF)}
+.mod .tag{margin-left:auto;font-size:9.5px;letter-spacing:.06em;color:#516B85;border:1px solid #2A3D55;border-radius:99px;padding:1px 7px}
+.nav{padding:2px 10px;flex:1}
+.nav a{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;color:#8FA5BC;text-decoration:none;font-weight:600;cursor:pointer}
+.nav a:hover{color:#FFF;background:var(--navy-2)}
+.nav a:focus-visible{outline:2px solid #00C2FF;outline-offset:1px}
+.nav a.on{color:#FFF;background:var(--navy-2);box-shadow:inset 2px 0 0 #00C2FF}
+.side .foot{padding:12px 16px;border-top:1px solid var(--navy-line);font-size:11px;color:#516B85}
+/* ---------- topbar ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:14px;padding:12px 22px;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .emp{display:flex;align-items:center;gap:9px;font-weight:700}
+.top .emp .cube{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#00C2FF,#2E6BFF);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800}
+.top .emp small{display:block;font-weight:500;color:var(--ink-2);font-size:11px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 11px;font-weight:600;font-size:12.5px;color:var(--ink)}
+.top .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.proto{background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;letter-spacing:.05em}
+/* ---------- content ---------- */
+.wrap{padding:20px 22px 40px;max-width:1120px;width:100%;margin:0 auto}
+.pagehead{display:flex;align-items:baseline;gap:12px;margin:2px 0 16px;flex-wrap:wrap}
+.pagehead h1{font-size:21px;font-weight:800;margin:0;letter-spacing:-.01em}
+.pagehead .sub{color:var(--ink-2)}
+.pagehead .cta{margin-left:auto;background:linear-gradient(135deg,#00A8E0,#2E6BFF);color:#fff;border:0;border-radius:9px;padding:8px 15px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:1fr 1fr}
+@media(max-width:900px){.g4,.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.side{display:none}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card.lift{box-shadow:var(--shadow)}
+.kpi .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .d{font-size:12px;margin-top:2px;font-weight:600}
+.up{color:var(--good)} .down{color:var(--crit)} .mid{color:var(--warn)}
+h3.sec{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px;font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
+td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+.tbl-scroll{overflow-x:auto}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700}
+.p-good{background:var(--good-soft);color:var(--good)} .p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-crit{background:var(--crit-soft);color:var(--crit)} .p-info{background:var(--accent-soft);color:var(--accent)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12.2px}
+.tot td{font-weight:800;border-top:2px solid var(--ink);background:var(--paper)}
+.subtot td{font-weight:700;background:var(--paper)}
+.indent1{padding-left:26px!important}.indent2{padding-left:44px!important}
+.view{animation:fade .18s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.view{animation:none}}
+.bal-ok{display:flex;gap:8px;align-items:center;background:var(--good-soft);color:var(--good);border-radius:9px;padding:8px 13px;font-weight:700;font-size:13px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);align-items:flex-start}
+.step:last-child{border-bottom:0}
+.step .st{width:22px;height:22px;border-radius:99px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;margin-top:1px}
+.st.done{background:var(--good-soft);color:var(--good)} .st.now{background:var(--accent-soft);color:var(--accent)} .st.todo{background:var(--paper);color:var(--ink-2);border:1px solid var(--line)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding:6px 2px 0}
+.bars .b{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;text-align:center}
+.bars .barwrap{flex:1;display:flex;flex-direction:column;justify-content:flex-end}
+.bars .bar{border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#00C2FF,#2E6BFF);min-height:4px}
+.bars .bar.neg{background:var(--line)}
+.bars small{color:var(--ink-2);font-size:10.5px}
+.f29line{display:flex;justify-content:space-between;gap:10px;padding:7px 2px;border-bottom:1px dashed var(--line)}
+.f29line:last-child{border-bottom:0}
+.f29line .code{color:var(--ink-2)}
+.legend{font-size:11.5px;color:var(--ink-2);margin-top:10px}
+a.btn2{border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-weight:700;font-size:12.5px;color:var(--accent);cursor:pointer;background:var(--surface)}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">IN<em>SI</em>SO</div>
+      <small>Suite de gestión</small>
+    </div>
+    <div class="lbl">Módulos</div>
+    <div class="mods">
+      <div class="mod"><span class="dot"></span>Logística</div>
+      <div class="mod act"><span class="dot"></span>Finanzas</div>
+      <div class="mod"><span class="dot"></span>Personas <span class="tag">pronto</span></div>
+    </div>
+    <div class="lbl">Finanzas</div>
+    <nav class="nav" id="nav">
+      <a data-v="dash" class="on">Panel financiero</a>
+      <a data-v="cuentas">Plan de cuentas</a>
+      <a data-v="diario">Comprobantes</a>
+      <a data-v="iva">IVA · F29</a>
+      <a data-v="centros">Centros de costo</a>
+      <a data-v="eeff">EEFF</a>
+      <a data-v="cierre">Cierre mensual</a>
+    </nav>
+    <div class="foot">Contadora M. Quiroz<br>Perfil: Contador multi-cliente</div>
+  </aside>
+
+  <div class="main">
+    <div class="top">
+      <div class="emp"><div class="cube">B</div><div>Bersycolor Plus XL SpA<small>RUT 77.512.340-6 · Pro Pyme 14 D</small></div></div>
+      <span class="chip">Período: Agosto 2026 ▾</span>
+      <div class="right">
+        <span class="proto">PROTOTIPO · DATOS DE EJEMPLO</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- ================= DASHBOARD ================= -->
+      <section class="view" id="v-dash">
+        <div class="pagehead"><h1>Panel financiero</h1><span class="sub">Agosto 2026 · al día 31</span><button class="cta">+ Nuevo comprobante</button></div>
+        <div class="grid g4" style="margin-bottom:14px">
+          <div class="card kpi lift"><div class="k">Resultado del mes</div><div class="v num">$ 2.184.320</div><div class="d up">▲ 18% vs julio</div></div>
+          <div class="card kpi"><div class="k">Caja y bancos</div><div class="v num">$ 7.945.110</div><div class="d up">▲ $ 1,2 M en el mes</div></div>
+          <div class="card kpi"><div class="k">IVA proyectado (F29)</div><div class="v num">$ 486.210</div><div class="d mid">vence 20 sept</div></div>
+          <div class="card kpi"><div class="k">Por cobrar vencido</div><div class="v num">$ 890.000</div><div class="d down">2 facturas +30 días</div></div>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3 class="sec">Resultado últimos 6 meses</h3>
+            <div class="bars">
+              <div class="b"><div class="barwrap"><div class="bar" style="height:34%"></div></div><small>Mar</small></div>
+              <div class="b"><div class="barwrap"><div class="bar" style="height:48%"></div></div><small>Abr</small></div>
+              <div class="b"><div class="barwrap"><div class="bar neg" style="height:12%"></div></div><small>May</small></div>
+              <div class="b"><div class="barwrap"><div class="bar" style="height:56%"></div></div><small>Jun</small></div>
+              <div class="b"><div class="barwrap"><div class="bar" style="height:72%"></div></div><small>Jul</small></div>
+              <div class="b"><div class="barwrap"><div class="bar" style="height:86%"></div></div><small>Ago</small></div>
+            </div>
+            <div class="legend">Barra = utilidad neta mensual · Mayo con pérdida por compra de maquinaria</div>
+          </div>
+          <div class="card">
+            <h3 class="sec">Requiere atención</h3>
+            <table>
+              <tr><td><span class="pill p-crit">Vencida</span></td><td>F-1082 Comercial Andes Ltda.<br><span class="legend">$ 590.000 · 41 días</span></td><td class="r"><a class="btn2">Cobrar</a></td></tr>
+              <tr><td><span class="pill p-warn">Por vencer</span></td><td>F29 agosto — propuesta lista<br><span class="legend">vence 20 sept (facturador electrónico)</span></td><td class="r"><a class="btn2">Revisar</a></td></tr>
+              <tr><td><span class="pill p-info">RCV</span></td><td>3 facturas de compra nuevas en el SII sin centralizar</td><td class="r"><a class="btn2">Importar</a></td></tr>
+              <tr><td><span class="pill p-good">OK</span></td><td>Julio cerrado y bloqueado el 09-08 · sin diferencias RCV</td><td class="r"></td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PLAN DE CUENTAS ================= -->
+      <section class="view" id="v-cuentas" hidden>
+        <div class="pagehead"><h1>Plan de cuentas</h1><span class="sub">Plantilla chilena IFRS pyme · editable</span><button class="cta">+ Nueva cuenta</button></div>
+        <div class="card tbl-scroll">
+          <table>
+            <tr><th>Código</th><th>Cuenta</th><th>Tipo</th><th class="r">Saldo agosto</th></tr>
+            <tr class="subtot"><td class="mono">1</td><td>ACTIVOS</td><td></td><td class="r num">$ 24.310.480</td></tr>
+            <tr><td class="mono indent1">1.1.01.001</td><td class="indent1">Caja</td><td>Imputable</td><td class="r num">$ 312.400</td></tr>
+            <tr><td class="mono indent1">1.1.01.002</td><td class="indent1">Banco — Cta. Emprendedor</td><td>Imputable</td><td class="r num">$ 7.632.710</td></tr>
+            <tr><td class="mono indent1">1.1.02.001</td><td class="indent1">Clientes (CxC)</td><td>Imputable</td><td class="r num">$ 3.480.000</td></tr>
+            <tr><td class="mono indent1">1.1.03.001</td><td class="indent1">IVA crédito fiscal</td><td>Imputable</td><td class="r num">$ 402.190</td></tr>
+            <tr><td class="mono indent1">1.2.01.001</td><td class="indent1">Maquinaria y equipos</td><td>Imputable</td><td class="r num">$ 12.483.180</td></tr>
+            <tr class="subtot"><td class="mono">2</td><td>PASIVOS</td><td></td><td class="r num">$ 6.921.330</td></tr>
+            <tr><td class="mono indent1">2.1.01.001</td><td class="indent1">Proveedores (CxP)</td><td>Imputable</td><td class="r num">$ 4.110.220</td></tr>
+            <tr><td class="mono indent1">2.1.02.001</td><td class="indent1">IVA débito fiscal</td><td>Imputable</td><td class="r num">$ 888.400</td></tr>
+            <tr><td class="mono indent1">2.1.03.001</td><td class="indent1">Retención honorarios 15,25%</td><td>Imputable</td><td class="r num">$ 76.250</td></tr>
+            <tr class="subtot"><td class="mono">3</td><td>PATRIMONIO</td><td></td><td class="r num">$ 11.104.530</td></tr>
+            <tr class="subtot"><td class="mono">4</td><td>INGRESOS</td><td></td><td class="r num">$ 4.676.840</td></tr>
+            <tr><td class="mono indent1">4.1.01.001</td><td class="indent1">Ventas nacionales</td><td>Imputable</td><td class="r num">$ 4.676.840</td></tr>
+            <tr class="subtot"><td class="mono">5</td><td>GASTOS</td><td></td><td class="r num">$ 2.492.520</td></tr>
+            <tr><td class="mono indent1">5.1.01.001</td><td class="indent1">Costo de ventas</td><td>Imputable</td><td class="r num">$ 1.310.500</td></tr>
+            <tr><td class="mono indent1">5.2.01.003</td><td class="indent1">Honorarios profesionales</td><td>Imputable</td><td class="r num">$ 500.000</td></tr>
+            <tr><td class="mono indent1">5.2.02.001</td><td class="indent1">Arriendo local</td><td>Imputable</td><td class="r num">$ 450.000</td></tr>
+          </table>
+        </div>
+        <div class="legend">Las cuentas de nivel 1-3 agrupan; solo las de nivel 4 reciben movimientos. El árbol completo trae 180 cuentas de la plantilla chilena.</div>
+      </section>
+
+      <!-- ================= COMPROBANTES ================= -->
+      <section class="view" id="v-diario" hidden>
+        <div class="pagehead"><h1>Comprobantes · Libro diario</h1><span class="sub">Agosto 2026 · 47 comprobantes</span><button class="cta">+ Nuevo comprobante</button></div>
+        <div class="grid g2">
+          <div class="card tbl-scroll">
+            <h3 class="sec">Últimos comprobantes</h3>
+            <table>
+              <tr><th>N°</th><th>Fecha</th><th>Glosa</th><th class="r">Monto</th><th></th></tr>
+              <tr><td class="mono">T-0047</td><td>31-08</td><td>Centralización ventas agosto (RCV)</td><td class="r num">$ 5.565.240</td><td><span class="pill p-good">OK</span></td></tr>
+              <tr><td class="mono">E-0046</td><td>30-08</td><td>Pago arriendo local — transferencia</td><td class="r num">$ 450.000</td><td><span class="pill p-good">OK</span></td></tr>
+              <tr><td class="mono">T-0045</td><td>28-08</td><td>Boleta honorarios diseñador (ret. 15,25%)</td><td class="r num">$ 500.000</td><td><span class="pill p-good">OK</span></td></tr>
+              <tr><td class="mono">I-0044</td><td>27-08</td><td>Cobro F-1079 Constructora Sur</td><td class="r num">$ 1.428.000</td><td><span class="pill p-good">OK</span></td></tr>
+              <tr><td class="mono">T-0043</td><td>26-08</td><td>Centralización compras (RCV · 6 docs)</td><td class="r num">$ 2.402.690</td><td><span class="pill p-good">OK</span></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3 class="sec">Comprobante T-0045 · Traspaso · 28-08-2026</h3>
+            <div class="tbl-scroll"><table>
+              <tr><th>Cuenta</th><th>Centro</th><th class="r">Debe</th><th class="r">Haber</th></tr>
+              <tr><td><span class="mono">5.2.01.003</span> Honorarios profesionales</td><td>ADM</td><td class="r num">500.000</td><td class="r num">—</td></tr>
+              <tr><td><span class="mono">2.1.03.001</span> Retención honorarios 15,25%</td><td>—</td><td class="r num">—</td><td class="r num">76.250</td></tr>
+              <tr><td><span class="mono">2.1.04.001</span> Honorarios por pagar</td><td>—</td><td class="r num">—</td><td class="r num">423.750</td></tr>
+              <tr class="tot"><td>Totales</td><td></td><td class="r num">500.000</td><td class="r num">500.000</td></tr>
+            </table></div>
+            <div style="margin-top:10px" class="bal-ok">✓ Cuadrado — la retención se pagará en el F29 de septiembre</div>
+            <div class="legend">Respaldo adjunto: BHE N° 214 (PDF) · El sistema no permite guardar comprobantes descuadrados ni tocar períodos cerrados.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= IVA F29 ================= -->
+      <section class="view" id="v-iva" hidden>
+        <div class="pagehead"><h1>IVA · Propuesta F29</h1><span class="sub">Agosto 2026 · según libros + RCV</span><button class="cta">Exportar para declarar</button></div>
+        <div class="grid g2">
+          <div class="card">
+            <h3 class="sec">Propuesta F29 agosto (se declara en septiembre)</h3>
+            <div class="f29line"><span><span class="mono code">[538]</span> Débito fiscal (ventas afectas)</span><span class="num">$ 888.400</span></div>
+            <div class="f29line"><span><span class="mono code">[511]</span> Crédito fiscal (compras del giro)</span><span class="num">$ 402.190</span></div>
+            <div class="f29line"><span><b>IVA determinado</b></span><span class="num"><b>$ 486.210</b></span></div>
+            <div class="f29line"><span><span class="mono code">[062]</span> PPM obligatorio (0,25% ventas netas)</span><span class="num">$ 11.692</span></div>
+            <div class="f29line"><span><span class="mono code">[151]</span> Retención honorarios (BHE agosto)</span><span class="num">$ 76.250</span></div>
+            <div class="f29line" style="border-top:2px solid var(--ink);margin-top:4px"><span><b>Total a pagar</b></span><span class="num"><b>$ 574.152</b></span></div>
+            <div class="legend">Plazo: 12 sept (caja) · <b>20 sept</b> declarando por internet con pago (facturador electrónico). Sin movimiento se declara igual.</div>
+          </div>
+          <div class="card">
+            <h3 class="sec">Cuadratura contra el RCV del SII</h3>
+            <table>
+              <tr><th></th><th class="r">Libros</th><th class="r">RCV SII</th><th class="r">Dif.</th></tr>
+              <tr><td>Ventas (7 DTE)</td><td class="r num">4.676.840</td><td class="r num">4.676.840</td><td class="r"><span class="pill p-good">0</span></td></tr>
+              <tr><td>Compras (9 DTE)</td><td class="r num">2.116.790</td><td class="r num">2.402.690</td><td class="r"><span class="pill p-crit">285.900</span></td></tr>
+            </table>
+            <div style="margin-top:10px"><span class="pill p-warn">3 facturas de compra sin centralizar</span></div>
+            <div class="legend" style="margin-top:8px">Ferretería Central F-8821 ($ 120.400) · Copec F-99213 ($ 85.500) · PC Factory F-45102 ($ 80.000). Un clic las centraliza con su IVA al libro de compras.</div>
+            <div style="margin-top:8px"><a class="btn2">Centralizar las 3 →</a></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CENTROS ================= -->
+      <section class="view" id="v-centros" hidden>
+        <div class="pagehead"><h1>Centros de costo</h1><span class="sub">P&amp;L por centro · agosto 2026</span></div>
+        <div class="card tbl-scroll">
+          <table>
+            <tr><th>Centro</th><th class="r">Ingresos</th><th class="r">Gastos</th><th class="r">Resultado</th><th class="r">Presup. gasto</th><th class="r">Desviación</th></tr>
+            <tr><td><b>TIENDA</b> · Local San Miguel</td><td class="r num">3.248.840</td><td class="r num">1.412.300</td><td class="r num">1.836.540</td><td class="r num">1.500.000</td><td class="r"><span class="pill p-good">−5,8%</span></td></tr>
+            <tr><td><b>OBRA-12</b> · Pintura edificio Ñuñoa</td><td class="r num">1.428.000</td><td class="r num">640.220</td><td class="r num">787.780</td><td class="r num">560.000</td><td class="r"><span class="pill p-warn">+14,3%</span></td></tr>
+            <tr><td><b>ADM</b> · Administración</td><td class="r num">—</td><td class="r num">440.000</td><td class="r num">−440.000</td><td class="r num">450.000</td><td class="r"><span class="pill p-good">−2,2%</span></td></tr>
+            <tr class="tot"><td>Total empresa</td><td class="r num">4.676.840</td><td class="r num">2.492.520</td><td class="r num">2.184.320</td><td class="r num">2.510.000</td><td class="r"><span class="pill p-good">−0,7%</span></td></tr>
+          </table>
+        </div>
+        <div class="legend">Con el módulo Logística activo, cada proyecto de obra se crea automáticamente como centro de costo y sus consumos de bodega llegan valorizados aquí.</div>
+      </section>
+
+      <!-- ================= EEFF ================= -->
+      <section class="view" id="v-eeff" hidden>
+        <div class="pagehead"><h1>Estados financieros</h1><span class="sub">Al 31-08-2026 · formato clasificado</span><button class="cta">Exportar Excel</button></div>
+        <div class="grid g2">
+          <div class="card tbl-scroll">
+            <h3 class="sec">Balance clasificado</h3>
+            <table>
+              <tr><th></th><th class="r">M$ ago-26</th></tr>
+              <tr class="subtot"><td>Activos corrientes</td><td class="r num">11.827</td></tr>
+              <tr><td class="indent1">Efectivo y equivalentes</td><td class="r num">7.945</td></tr>
+              <tr><td class="indent1">Deudores comerciales</td><td class="r num">3.480</td></tr>
+              <tr><td class="indent1">Activos por impuestos (IVA CF)</td><td class="r num">402</td></tr>
+              <tr class="subtot"><td>Activos no corrientes</td><td class="r num">12.483</td></tr>
+              <tr><td class="indent1">Propiedades, planta y equipo</td><td class="r num">12.483</td></tr>
+              <tr class="tot"><td>Total activos</td><td class="r num">24.310</td></tr>
+              <tr class="subtot"><td>Pasivos corrientes</td><td class="r num">6.921</td></tr>
+              <tr><td class="indent1">Cuentas por pagar comerciales</td><td class="r num">4.534</td></tr>
+              <tr><td class="indent1">Pasivos por impuestos (IVA DF, ret.)</td><td class="r num">965</td></tr>
+              <tr><td class="indent1">Otros pasivos</td><td class="r num">1.422</td></tr>
+              <tr class="subtot"><td>Patrimonio</td><td class="r num">17.389</td></tr>
+              <tr><td class="indent1">Capital pagado</td><td class="r num">5.000</td></tr>
+              <tr><td class="indent1">Resultados acumulados + del ejercicio</td><td class="r num">12.389</td></tr>
+              <tr class="tot"><td>Total pasivos y patrimonio</td><td class="r num">24.310</td></tr>
+            </table>
+          </div>
+          <div class="card tbl-scroll">
+            <h3 class="sec">Estado de resultados (ene–ago)</h3>
+            <table>
+              <tr><th></th><th class="r">M$ acum.</th></tr>
+              <tr><td>Ingresos de actividades ordinarias</td><td class="r num">31.240</td></tr>
+              <tr><td>Costo de ventas</td><td class="r num">(9.870)</td></tr>
+              <tr class="subtot"><td>Margen bruto</td><td class="r num">21.370</td></tr>
+              <tr><td>Gastos de administración</td><td class="r num">(6.480)</td></tr>
+              <tr><td>Otros gastos por función</td><td class="r num">(2.110)</td></tr>
+              <tr class="subtot"><td>Resultado operacional</td><td class="r num">12.780</td></tr>
+              <tr><td>Ingresos financieros</td><td class="r num">96</td></tr>
+              <tr class="tot"><td>Resultado antes de impuesto</td><td class="r num">12.876</td></tr>
+              <tr><td>Impuesto renta Pro Pyme (12,5%)</td><td class="r num">(1.610)</td></tr>
+              <tr class="tot"><td>Utilidad del período</td><td class="r num">11.266</td></tr>
+            </table>
+            <div class="legend">Mismo motor de clasificación probado en el caso C001 (FECU Cintac): del balance al EEFF sin planillas intermedias.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CIERRE ================= -->
+      <section class="view" id="v-cierre" hidden>
+        <div class="pagehead"><h1>Cierre mensual guiado</h1><span class="sub">Agosto 2026 · 4 de 6 pasos listos</span></div>
+        <div class="grid g2">
+          <div class="card">
+            <div class="steps">
+              <div class="step"><span class="st done">✓</span><div><b>1 · Centralizar RCV de ventas</b><div class="legend">7 DTE importados del SII, sin diferencias</div></div></div>
+              <div class="step"><span class="st done">✓</span><div><b>2 · Centralizar RCV de compras</b><div class="legend">Quedan 3 documentos — resueltos desde IVA · F29</div></div></div>
+              <div class="step"><span class="st done">✓</span><div><b>3 · Registrar honorarios y remuneraciones</b><div class="legend">1 BHE con retención 15,25% registrada</div></div></div>
+              <div class="step"><span class="st done">✓</span><div><b>4 · Conciliar banco</b><div class="legend">Cartola importada · 31/31 movimientos conciliados</div></div></div>
+              <div class="step"><span class="st now">5</span><div><b>5 · Revisar propuesta F29 y declarar</b><div class="legend">Propuesta lista por $ 574.152 — declarar en sii.cl antes del 20-09</div></div></div>
+              <div class="step"><span class="st todo">6</span><div><b>6 · Bloquear el período</b><div class="legend">Nadie podrá modificar agosto sin reabrirlo con permiso de administrador</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="sec">Estado del período</h3>
+            <table>
+              <tr><td>Comprobantes del mes</td><td class="r num">47</td></tr>
+              <tr><td>Descuadrados</td><td class="r"><span class="pill p-good">0 (imposible por diseño)</span></td></tr>
+              <tr><td>Diferencia libros vs RCV</td><td class="r"><span class="pill p-warn">$ 285.900 (3 docs)</span></td></tr>
+              <tr><td>Banco sin conciliar</td><td class="r"><span class="pill p-good">0 movimientos</span></td></tr>
+              <tr><td>Julio 2026</td><td class="r"><span class="pill p-good">Cerrado 09-08</span></td></tr>
+            </table>
+            <div class="legend" style="margin-top:10px">Este asistente es el "Checklist de Cierre Mensual" de INSISO convertido en producto: la rutina de 15 minutos, con semáforos y sin pasos olvidados.</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('nav').addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-v]');
+  if (!a) return;
+  document.querySelectorAll('#nav a').forEach((x) => x.classList.toggle('on', x === a));
+  document.querySelectorAll('.view').forEach((v) => { v.hidden = (v.id !== 'v-' + a.dataset.v); });
+});
+</script>
