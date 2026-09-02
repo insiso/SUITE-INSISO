@@ -80,12 +80,12 @@ export default function LoginPage() {
         <div className="mb-8 flex flex-col items-center text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo-fapama.png"
-            alt="FAPAMA Ingeniería y Construcción"
+            src="/logo-insiso.png"
+            alt="INSISO · Ingeniería, Sistemas & Software"
             className="mb-4 h-14 w-auto"
           />
-          <h1 className="sr-only">ERP FAPAMA · {APP_EMPRESA}</h1>
-          <p className="text-sm text-muted-foreground">Sistema de gestión ERP</p>
+          <h1 className="sr-only">Suite INSISO · {APP_EMPRESA}</h1>
+          <p className="text-sm text-muted-foreground">Suite de gestión empresarial</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-8 shadow-xl">
@@ -100,7 +100,7 @@ export default function LoginPage() {
                   <Input
                     type="email"
                     autoComplete="email"
-                    placeholder="nombre@fapama.cl"
+                    placeholder="nombre@insiso.cl"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   <Input
                     type="email"
                     autoComplete="email"
-                    placeholder="nombre@fapama.cl"
+                    placeholder="nombre@insiso.cl"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required

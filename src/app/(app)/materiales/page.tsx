@@ -434,7 +434,7 @@ export default function MaterialesPage() {
   async function exportar() {
     try {
       await exportarExcel(
-        "materiales_fapama",
+        "materiales_insiso",
         materiales.map((m) => ({
           sku: m.sku,
           descripcion: m.descripcion,

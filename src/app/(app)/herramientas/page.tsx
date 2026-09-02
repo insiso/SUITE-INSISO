@@ -492,7 +492,7 @@ export default function HerramientasPage() {
   async function exportarHerramientas() {
     try {
       await exportarExcel(
-        "herramientas_fapama",
+        "herramientas_insiso",
         herramientas.map((h) => {
           const items = (stockPorHerramienta.get(h.id) ?? []).filter((i) => i.cantidad !== 0);
           const ubicaciones = items

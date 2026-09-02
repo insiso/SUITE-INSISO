@@ -47,7 +47,7 @@ export default function ProyectosPage() {
 
   async function exportar() {
     try {
-      await exportarExcel("proyectos_fapama", filtrados.map((p) => ({
+      await exportarExcel("proyectos_insiso", filtrados.map((p) => ({
         codigo: p.codigo,
         nombre: p.nombre,
         estado: p.estado,

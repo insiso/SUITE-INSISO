@@ -7,8 +7,8 @@ import type {
   TipoMovimiento,
 } from "@/lib/types";
 
-export const APP_NOMBRE = "ERP FAPAMA";
-export const APP_EMPRESA = "FAPAMA Ing y Construcción SpA";
+export const APP_NOMBRE = "Suite INSISO";
+export const APP_EMPRESA = "INSISO SpA · Ingeniería, Sistemas & Software";
 
 export const TIPOS_PAGO = [
   "Contado",

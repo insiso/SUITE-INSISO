@@ -221,7 +221,7 @@ export default function ProveedoresPage() {
   async function exportar() {
     try {
       await exportarExcel(
-        "proveedores_fapama",
+        "proveedores_insiso",
         proveedores.map((p) => ({
           rut: p.rut,
           razon_social: p.razon_social,

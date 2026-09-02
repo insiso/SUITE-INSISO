@@ -51,7 +51,7 @@ export default function BodegasPage() {
 
   async function exportar() {
     try {
-      await exportarExcel("bodegas_fapama", filtradas.map((b) => ({
+      await exportarExcel("bodegas_insiso", filtradas.map((b) => ({
         codigo: b.codigo,
         nombre: b.nombre,
         tipo: b.tipo,

@@ -6,7 +6,7 @@ import { ToastProvider } from "@/components/ui/toast";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "ERP FAPAMA · Ing y Construcción SpA",
+  title: "Suite INSISO · Gestión Empresarial",
   description:
     "ERP empresarial para gestión de proyectos, inventario multi-bodega y control de presupuestos.",
 };

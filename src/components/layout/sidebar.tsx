@@ -33,8 +33,8 @@ export function Sidebar({
         <Link href="/dashboard" className="flex items-center gap-2.5" onClick={onNavegar}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo-fapama-blanco.png"
-            alt="FAPAMA Ingeniería y Construcción"
+            src="/logo-insiso-blanco.png"
+            alt="INSISO · Ingeniería, Sistemas & Software"
             className="h-8 w-auto"
           />
         </Link>

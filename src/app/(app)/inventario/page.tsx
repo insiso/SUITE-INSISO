@@ -27,7 +27,7 @@ export default function InventarioPage() {
   async function exportar() {
     try {
       await exportarExcel(
-        "inventario_fapama",
+        "inventario_insiso",
         filtrados.map((t) => {
           const fila: Record<string, string | number> = {
             sku: t.sku,

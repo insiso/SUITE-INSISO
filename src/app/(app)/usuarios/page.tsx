@@ -31,7 +31,7 @@ export default function UsuariosPage() {
 
   async function exportar() {
     try {
-      await exportarExcel("usuarios_fapama", filtrados.map((u) => ({
+      await exportarExcel("usuarios_insiso", filtrados.map((u) => ({
         nombre: u.nombre,
         email: u.email,
         rol: u.rol,
@@ -290,7 +290,7 @@ export default function UsuariosPage() {
               type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="maria@fapama.cl"
+              placeholder="maria@insiso.cl"
             />
           </Field>
           <Field label="Contraseña inicial" required hint="Mínimo 6 caracteres. La persona puede cambiarla luego.">

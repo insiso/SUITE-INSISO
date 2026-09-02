@@ -37,7 +37,7 @@ export default function FacturasPage() {
 
   async function exportar() {
     try {
-      await exportarExcel("facturas_fapama", filtradas.map((f) => ({
+      await exportarExcel("facturas_insiso", filtradas.map((f) => ({
         numero: f.numero_factura,
         fecha: formatFecha(f.fecha),
         proveedor: mapProveedor.get(f.proveedor_id) ?? "",

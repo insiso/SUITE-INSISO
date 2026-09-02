@@ -72,7 +72,7 @@ export default function MovimientosPage() {
 
   async function exportar() {
     try {
-      await exportarExcel("movimientos_fapama", filtrados.map((m) => {
+      await exportarExcel("movimientos_insiso", filtrados.map((m) => {
         const mat = mapMaterial.get(m.material_id);
         const origen = m.bodega_origen_id ? mapBodega.get(m.bodega_origen_id) : null;
         const destino = m.bodega_destino_id ? mapBodega.get(m.bodega_destino_id) : null;
